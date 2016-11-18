@@ -13,21 +13,24 @@ let square x = x * x
 type MainPage() as this = 
     inherit ContentPage()
 
-    let stack = StackLayout(VerticalOptions = LayoutOptions.FillAndExpand)
+    let stack = StackLayout(
+                  VerticalOptions = LayoutOptions.Center)
 
-    let first = Entry()
-    let button = Button(Text = "Add")
-    let output = Label(XAlign = TextAlignment.Center, Text = "")
+    let input = Entry()
+    let button = Button(Text = "Square")
+    let output = 
+          Label(XAlign = TextAlignment.Center, Text = "")
 
     let buttonHandler x = 
-      let result = match tryParse first.Text  with 
+      let result = match tryParse input.Text  with 
                     | Some y -> (square y).ToString()
-                    | None   -> "enter a number"
+                    | None   -> "Enter a number"
       output.Text <- result
 
     do
-        button.Clicked.AddHandler (new EventHandler(fun x -> buttonHandler))
-        stack.Children.Add(first)
+        button.Clicked.AddHandler (
+          new EventHandler(fun x -> buttonHandler))
+        stack.Children.Add(input)
         stack.Children.Add(button)
         stack.Children.Add(output)
         this.Content <- stack
